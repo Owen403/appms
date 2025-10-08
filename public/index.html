@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music App - Ứng dụng nghe nhạc</title>
+		<link rel="stylesheet" href="style-new.css?v=3" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+				<h1><i class="fas fa-music"></i> Music App</h1>
+				<p>Ứng dụng nghe nhạc với lời bài hát</p>
+			</header>
+
+			<!-- Tab Navigation -->
+			<div class="tab-container">
+				<button class="tab-btn active" data-tab="player"><i class="fas fa-play"></i> Phát nhạc</button>
+				<button class="tab-btn" data-tab="upload"><i class="fas fa-upload"></i> Upload nhạc</button>
+				<button class="tab-btn" data-tab="playlist"><i class="fas fa-list"></i> Danh sách nhạc</button>
+			</div>
+
+			<!-- Player Tab -->
+			<div class="tab-content active" id="player-tab">
+				<div class="player-section">
+					<div class="current-song-info">
+						<h3 id="current-title">Chọn bài hát để phát</h3>
+						<p id="current-artist">---</p>
+					</div>
+
+					<div class="audio-controls">
+						<audio id="audio-player" controls>
+							<source id="audio-source" src="" type="audio/mpeg" />
+							Trình duyệt không hỗ trợ phát nhạc.
+						</audio>
+					</div>
+
+					<div class="lyrics-container">
+						<h4><i class="fas fa-quote-left"></i> Lời bài hát</h4>
+
+						<!-- Lyrics Mode Toggle -->
+						<div class="lyrics-mode-toggle">
+							<button class="mode-btn active" id="mode-normal">
+								<i class="fas fa-align-left"></i> Lời thường
+							</button>
+							<button class="mode-btn" id="mode-synced">
+								<i class="fas fa-microphone-alt"></i> Karaoke
+							</button>
+						</div>
+
+						<div class="lyrics-display" id="lyrics-display">
+							<p class="no-lyrics">Chọn bài hát để xem lời...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Upload Tab -->
+			<div class="tab-content" id="upload-tab">
+				<div class="upload-section">
+					<h2><i class="fas fa-cloud-upload-alt"></i> Upload bài hát mới</h2>
+
+					<!-- Tab chọn loại upload -->
+					<div class="upload-method-tabs">
+						<button type="button" class="method-tab active" data-method="file">
+							<i class="fas fa-file-upload"></i> Upload file
+						</button>
+						<button type="button" class="method-tab" data-method="url">
+							<i class="fas fa-link"></i> Từ URL
+						</button>
+					</div>
+
+					<!-- Form upload file -->
+					<form
+						id="upload-form"
+						enctype="multipart/form-data"
+						class="upload-method active"
+						data-method="file"
+					>
+						<div class="form-group">
+							<label for="title">Tên bài hát:</label>
+							<input type="text" id="title" name="title" />
+						</div>
+
+						<div class="form-group">
+							<label for="artist">Nghệ sĩ:</label>
+							<input type="text" id="artist" name="artist" />
+						</div>
+
+						<div class="form-group">
+							<label for="audio">File nhạc:</label>
+							<input type="file" id="audio" name="audio" accept="audio/*" required />
+							<small>Hỗ trợ: MP3, WAV, OGG, M4A</small>
+						</div>
+
+						<div class="form-group">
+							<label class="checkbox-container">
+								<input type="checkbox" id="autoExtract" name="autoExtract" checked />
+								<span class="checkmark"></span>
+								<strong>Tự động trích xuất thông tin và lời bài hát</strong>
+								<small>Tự động lấy tên, nghệ sĩ và lời từ file MP3 hoặc từ internet</small>
+							</label>
+						</div>
+
+						<div class="form-group">
+							<button type="button" class="btn-analyze" id="analyzeBtn">
+								<i class="fas fa-search"></i> Phân tích file trước
+							</button>
+							<small>Xem thông tin trong file MP3 trước khi upload</small>
+						</div>
+
+						<div class="form-group">
+							<label for="lyrics">Lời bài hát:</label>
+							<textarea
+								id="lyrics"
+								name="lyrics"
+								rows="8"
+								placeholder="Nhập lời bài hát (tùy chọn) hoặc để trống để tự động tìm..."
+							></textarea>
+							<div class="lyrics-actions">
+								<button type="button" class="btn-find-lyrics" id="findLyricsBtn">
+									<i class="fas fa-search"></i> Tìm lời online
+								</button>
+								<span class="lyrics-status" id="lyricsStatus"></span>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-upload">
+							<i class="fas fa-upload"></i> Upload bài hát
+						</button>
+					</form>
+
+					<!-- Form upload từ URL -->
+					<form id="upload-url-form" class="upload-method" data-method="url">
+						<div class="form-group">
+							<label for="url">URL nhạc:</label>
+							<input
+								type="url"
+								id="url-input"
+								name="url"
+								required
+								placeholder="https://example.com/song.mp3"
+							/>
+							<small>Nhập URL trực tiếp tới file nhạc (MP3, WAV, OGG, M4A)</small>
+
+							<!-- Download progress -->
+							<div class="download-progress" id="downloadProgress">
+								<div class="download-info">
+									<strong>Đang download...</strong>
+									<div class="progress-bar">
+										<div class="progress-fill" id="progressFill"></div>
+									</div>
+									<div id="downloadInfo">Chuẩn bị download...</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="title-url">Tên bài hát:</label>
+							<input type="text" id="title-url" name="title" />
+						</div>
+
+						<div class="form-group">
+							<label for="artist-url">Nghệ sĩ:</label>
+							<input type="text" id="artist-url" name="artist" />
+						</div>
+
+						<div class="form-group">
+							<label class="checkbox-container">
+								<input type="checkbox" id="autoExtractUrl" name="autoExtract" checked />
+								<span class="checkmark"></span>
+								<strong>Tự động trích xuất thông tin</strong>
+								<small>Tự động lấy tên, nghệ sĩ và lời từ file sau khi download</small>
+							</label>
+						</div>
+
+						<div class="form-group">
+							<label for="lyrics-url">Lời bài hát:</label>
+							<textarea
+								id="lyrics-url"
+								name="lyrics"
+								rows="8"
+								placeholder="Nhập lời bài hát (tùy chọn) hoặc để trống để tự động tìm..."
+							></textarea>
+							<div class="lyrics-actions">
+								<button type="button" class="btn-find-lyrics" id="findLyricsUrlBtn">
+									<i class="fas fa-search"></i> Tìm lời online
+								</button>
+								<span class="lyrics-status" id="lyricsUrlStatus"></span>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-upload">
+							<i class="fas fa-download"></i> Download và upload
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- Playlist Tab -->
+			<div class="tab-content" id="playlist-tab">
+				<div class="playlist-section">
+					<h2><i class="fas fa-list"></i> Danh sách bài hát</h2>
+					<div class="songs-list" id="songs-list">
+						<p class="loading">Đang tải danh sách...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Loading overlay -->
+		<div class="loading-overlay" id="loading-overlay">
+			<div class="loading-spinner">
+				<i class="fas fa-spinner fa-spin"></i>
+				<p>Đang xử lý...</p>
+			</div>
+		</div>
+
+		<!-- Toast notifications -->
+		<div class="toast" id="toast"></div>
+
+		<!-- Synced Lyrics Editor Modal -->
+		<div id="synced-lyrics-modal" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3><i class="fas fa-microphone-alt"></i> Chỉnh sửa Synced Lyrics (Karaoke)</h3>
+					<button class="close-modal" onclick="closeSyncedLyricsEditor()">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="synced-editor-info">
+						<h4 id="synced-song-title">Tên bài hát</h4>
+						<p id="synced-song-artist">Nghệ sĩ</p>
+					</div>
+
+					<div class="synced-editor-help">
+						<p><strong>Format:</strong> <code>[mm:ss.xx] Lời bài hát</code></p>
+						<p><strong>Ví dụ:</strong></p>
+						<pre>
+[00:11.48] Trong nhân gian có hai điều không thể giấu
+[00:14.38] Một là khi say, hai khi đã yêu ai rồi
+[00:17.38] Những lúc ngồi đợi chờ này ở đâu mà ra?</pre
+						>
+						<p>
+							<strong>💡 Mẹo:</strong> Dùng nút "Tích Timestamp" bên dưới để tự động chèn timestamp
+							theo thời gian đang phát!
+						</p>
+						<p>
+							<strong>⌨️ Phím tắt:</strong> <code>Ctrl+T</code>: Tích timestamp |
+							<code>Ctrl+←/→</code>: Lùi/Tiến 3s | <code>Ctrl+Space</code>: Phát/Dừng
+						</p>
+					</div>
+
+					<!-- Mini Audio Player for Timestamp -->
+					<div class="mini-player">
+						<audio id="edit-audio-player" controls></audio>
+						<div class="timestamp-controls">
+							<div class="time-display">
+								<i class="fas fa-clock"></i> <span id="current-timestamp">00:00.00</span>
+							</div>
+							<div class="timestamp-actions">
+								<button
+									class="btn btn-timestamp"
+									onclick="insertTimestamp()"
+									title="Tích timestamp tại vị trí hiện tại (Ctrl+T)"
+								>
+									<i class="fas fa-plus-circle"></i> Tích Timestamp
+								</button>
+								<button
+									class="btn btn-timestamp btn-small"
+									onclick="jumpBackward()"
+									title="Lùi 3 giây (Ctrl+←)"
+								>
+									<i class="fas fa-backward"></i> -3s
+								</button>
+								<button
+									class="btn btn-timestamp btn-small"
+									onclick="jumpForward()"
+									title="Tiến 3 giây (Ctrl+→)"
+								>
+									<i class="fas fa-forward"></i> +3s
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="synced-lyrics-input">
+							<i class="fas fa-edit"></i> Synced Lyrics (LRC Format):
+						</label>
+						<textarea
+							id="synced-lyrics-input"
+							rows="15"
+							placeholder="Nhập synced lyrics theo format LRC..."
+							spellcheck="false"
+						></textarea>
+					</div>
+
+					<div class="synced-editor-actions">
+						<button class="btn btn-primary" onclick="saveSyncedLyrics()">
+							<i class="fas fa-save"></i> Lưu Synced Lyrics
+						</button>
+						<button class="btn btn-secondary" onclick="previewSyncedLyrics()">
+							<i class="fas fa-eye"></i> Xem trước
+						</button>
+						<button class="btn btn-secondary" onclick="clearSyncedLyrics()">
+							<i class="fas fa-eraser"></i> Xóa
+						</button>
+						<button class="btn btn-secondary" onclick="closeSyncedLyricsEditor()">
+							<i class="fas fa-times"></i> Hủy
+						</button>
+					</div>
+
+					<div id="synced-preview" class="synced-preview" style="display: none">
+						<h4><i class="fas fa-eye"></i> Xem trước:</h4>
+						<div id="synced-preview-content"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="synced-lyrics.js"></script>
+		<script src="script.js?v=5"></script>
+	</body>
+</html>
