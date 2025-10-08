@@ -1,0 +1,7 @@
+# Ignore uploads and dependencies
+uploads/
+node_modules/
+
+# Ignore large binaries and build outputs
+bin/
+desktop/dist/

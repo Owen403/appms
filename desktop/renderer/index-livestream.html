@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music Player - Livestream Overlay</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+		<link rel="stylesheet" href="style-livestream.css" />
+	</head>
+	<body>
+		<!-- Custom Title Bar -->
+		<div class="titlebar">
+			<div class="titlebar-drag">
+				<i class="fas fa-music"></i>
+				<span>Music Player - Livestream</span>
+			</div>
+			<div class="titlebar-controls">
+				<button class="titlebar-btn" id="pin-btn" title="Always On Top">
+					<i class="fas fa-thumbtack"></i>
+				</button>
+				<button class="titlebar-btn" id="minimize-btn" title="Minimize">
+					<i class="fas fa-minus"></i>
+				</button>
+				<button class="titlebar-btn close-btn" id="close-btn" title="Close">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- App Container -->
+		<div class="app-container">
+			<!-- Livestream Layout -->
+			<div class="livestream-layout">
+				<!-- Song Info -->
+				<div class="song-info-compact">
+					<div class="song-icon">
+						<i class="fas fa-music"></i>
+					</div>
+					<div class="song-details-compact">
+						<div class="song-title-compact" id="song-title-compact">Chọn playlist để phát nhạc</div>
+						<div class="song-artist-compact" id="song-artist-compact">Chưa có bài hát nào</div>
+					</div>
+				</div>
+
+				<!-- Controls -->
+				<div class="controls">
+					<button class="control-btn" id="prev-btn" title="Previous">
+						<i class="fas fa-backward"></i>
+					</button>
+					<button class="control-btn play-btn" id="play-btn" title="Play">
+						<i class="fas fa-play"></i>
+					</button>
+					<button class="control-btn" id="next-btn" title="Next">
+						<i class="fas fa-forward"></i>
+					</button>
+				</div>
+
+				<!-- Progress & Time -->
+				<div class="time-progress-compact">
+					<span class="time-compact" id="time-current">0:00</span>
+					<div class="progress-bar-compact" id="progress-bar-compact">
+						<div class="progress-filled-compact" id="progress-filled-compact" style="width: 0%"></div>
+					</div>
+					<span class="time-compact" id="time-total">0:00</span>
+				</div>
+
+				<!-- Toggle Playlist Button -->
+				<button class="toggle-playlist-btn" id="toggle-playlist-btn" title="Show/Hide Playlist">
+					<i class="fas fa-list"></i>
+				</button>
+			</div>
+
+			<!-- Playlist Dropdown -->
+			<div class="playlist-dropdown" id="playlist-dropdown">
+				<div id="playlist-dropdown-content">
+					<!-- Playlists loaded here -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Audio Player -->
+		<audio id="audio-player"></audio>
+
+		<script src="app-livestream.js"></script>
+	</body>
+</html>

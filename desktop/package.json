@@ -1,0 +1,39 @@
+{
+	"name": "music-player-desktop",
+	"version": "1.0.0",
+	"description": "Desktop Mini Music Player",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron .",
+		"build": "electron-builder",
+		"build:win": "electron-builder --win",
+		"dev": "electron . --dev"
+	},
+	"keywords": [
+		"music",
+		"player",
+		"desktop"
+	],
+	"author": "Your Name",
+	"license": "MIT",
+	"devDependencies": {
+		"electron": "^28.0.0",
+		"electron-builder": "^24.9.1"
+	},
+	"build": {
+		"appId": "com.musicplayer.desktop",
+		"productName": "Music Player",
+		"win": {
+			"target": [
+				"nsis"
+			],
+			"icon": "icon.ico"
+		},
+		"files": [
+			"main.js",
+			"preload.js",
+			"renderer/**/*",
+			"assets/**/*"
+		]
+	}
+}

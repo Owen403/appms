@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music Player</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+		<link rel="stylesheet" href="style-simple.css" />
+	</head>
+	<body>
+		<!-- Titlebar -->
+		<div class="titlebar">
+			<div class="titlebar-text">
+				<i class="fas fa-music"></i>
+				<span>Music Player</span>
+			</div>
+			<div class="titlebar-controls">
+				<button class="titlebar-btn" id="refresh-btn" title="Refresh">
+					<i class="fas fa-sync-alt"></i>
+				</button>
+				<button class="titlebar-btn" id="pin-btn" title="Pin On Top">
+					<i class="fas fa-thumbtack"></i>
+				</button>
+				<button class="titlebar-btn" id="minimize-btn">
+					<i class="fas fa-minus"></i>
+				</button>
+				<button class="titlebar-btn close" id="close-btn">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- Main Content -->
+		<div class="container">
+			<!-- Playlists Section -->
+			<div class="playlists-section" id="playlists-section">
+				<h3>Playlists</h3>
+				<div class="playlists-list" id="playlists-list">
+					<div class="loading">
+						<i class="fas fa-spinner fa-spin"></i>
+						<p>Đang tải...</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Songs Queue Section -->
+			<div class="queue-section" id="queue-section">
+				<h3>Danh sách phát</h3>
+				<div class="queue-list" id="queue-list">
+					<div class="empty">
+						<i class="fas fa-music"></i>
+						<p>Chọn playlist để xem danh sách</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Player Section -->
+			<div class="player-section">
+				<!-- Current Song -->
+				<div class="current-song">
+					<div class="album-cover">
+						<i class="fas fa-music"></i>
+					</div>
+					<div class="song-info">
+						<div class="song-title" id="song-title">Chọn playlist để phát</div>
+						<div class="song-artist" id="song-artist">---</div>
+					</div>
+				</div>
+
+				<!-- Progress -->
+				<div class="progress-section">
+					<span class="time" id="time-current">0:00</span>
+					<div class="progress-bar" id="progress-bar">
+						<div class="progress-fill" id="progress-fill"></div>
+					</div>
+					<span class="time" id="time-total">0:00</span>
+				</div>
+
+				<!-- Controls -->
+				<div class="controls">
+					<button class="control-btn" id="prev-btn">
+						<i class="fas fa-step-backward"></i>
+					</button>
+					<button class="control-btn play-btn" id="play-btn">
+						<i class="fas fa-play"></i>
+					</button>
+					<button class="control-btn" id="next-btn">
+						<i class="fas fa-step-forward"></i>
+					</button>
+				</div>
+
+				<!-- Volume -->
+				<div class="volume-section">
+					<i class="fas fa-volume-up"></i>
+					<input type="range" id="volume-slider" min="0" max="100" value="80" />
+					<span id="volume-value">80%</span>
+				</div>
+			</div>
+		</div>
+
+		<audio id="audio-player"></audio>
+		<script src="app-simple.js"></script>
+	</body>
+</html>

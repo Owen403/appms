@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music Player Desktop</title>
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+	</head>
+	<body>
+		<!-- Custom Title Bar -->
+		<div class="titlebar">
+			<div class="titlebar-drag">
+				<i class="fas fa-music"></i>
+				<span id="current-song-title">Music Player</span>
+			</div>
+			<div class="titlebar-controls">
+				<button class="titlebar-btn" id="pin-btn" title="Always on top">
+					<i class="fas fa-thumbtack"></i>
+				</button>
+				<button class="titlebar-btn" id="minimize-btn">
+					<i class="fas fa-minus"></i>
+				</button>
+				<button class="titlebar-btn" id="maximize-btn">
+					<i class="fas fa-expand"></i>
+				</button>
+				<button class="titlebar-btn close-btn" id="close-btn">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- Main Content -->
+		<div class="app-container">
+			<!-- Album Art / Visualizer -->
+			<div class="album-art">
+				<div class="album-art-placeholder">
+					<i class="fas fa-music"></i>
+				</div>
+				<div class="song-info-overlay">
+					<h2 id="song-title">SEANPOET x MUỘI x ANFANG | IU LÀ ĐÂY</h2>
+					<p id="song-artist">HOÀNG SEAN.</p>
+				</div>
+			</div>
+
+			<!-- Progress Bar -->
+			<div class="progress-container">
+				<span class="time-current" id="time-current">2:46</span>
+				<div class="progress-bar">
+					<div class="progress-filled" id="progress-filled" style="width: 70%"></div>
+				</div>
+				<span class="time-total" id="time-total">3:41</span>
+			</div>
+
+			<!-- Playback Controls -->
+			<div class="controls">
+				<button class="control-btn" id="prev-btn">
+					<i class="fas fa-step-backward"></i>
+				</button>
+				<button class="control-btn play-btn" id="play-btn">
+					<i class="fas fa-pause"></i>
+				</button>
+				<button class="control-btn" id="next-btn">
+					<i class="fas fa-step-forward"></i>
+				</button>
+			</div>
+
+			<!-- Volume Control -->
+			<div class="volume-container">
+				<i class="fas fa-volume-up"></i>
+				<input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="80" />
+				<span class="volume-value" id="volume-value">80%</span>
+			</div>
+
+			<!-- Playlist Tabs -->
+			<div class="tabs">
+				<button class="tab active" data-tab="playlists"><i class="fas fa-list"></i> Playlists</button>
+				<button class="tab" data-tab="queue"><i class="fas fa-stream"></i> Queue</button>
+			</div>
+
+			<!-- Playlist Content -->
+			<div class="content">
+				<div class="tab-content active" id="playlists-content">
+					<div class="playlist-list" id="playlist-list">
+						<!-- Playlists will be loaded here -->
+						<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading playlists...</div>
+					</div>
+				</div>
+
+				<div class="tab-content" id="queue-content">
+					<div class="queue-list" id="queue-list">
+						<!-- Queue will be loaded here -->
+						<p class="empty-state">
+							<i class="fas fa-music"></i><br />
+							No songs in queue
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Hidden Audio Element -->
+		<audio id="audio-player" preload="metadata"></audio>
+
+		<script src="app.js"></script>
+	</body>
+</html>
